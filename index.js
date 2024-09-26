@@ -3,18 +3,20 @@
 const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
-const cars = require("./routes/attendence");
-const users = require("./routes/users");
+// const cars = require("./routes/attendence");
+// const users = require("./routes/users");
 const bodyParser = require("body-parser");
 const mongoose = require("./config/database");
 var jwt = require("jsonwebtoken");
 const app = express();
 app.set("secretKey", "nodeRestApi");
 
-mongoose.connection.on(
-  "error",
-  console.error.bind(console, "MongoDB connection error:")
-);
+// require("dotenv").config();
+
+// mongoose.connection.on(
+//   "error",
+//   console.error.bind(console, "MongoDB connection error:")
+// );
 app.use(logger("dev"));
 app.use(cors());
 app.use(bodyParser.json());
@@ -22,9 +24,9 @@ app.get("/", function (req, res) {
   res.json({ tutorial: "Build REST API with node.js" });
 });
 
-app.use("/users", users);
+// app.use("/users", users);
 
-app.use("/attendence", validateUser, attendence);
+// app.use("/attendence", validateUser, attendence);
 app.get("/favicon.ico", function (req, res) {
   res.sendStatus(204);
 });
