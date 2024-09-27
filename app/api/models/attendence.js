@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
 const Schema = mongoose.Schema;
-const UserSchema = new Schema({
+const AttendenceSchema = new Schema({
   Date: {
     type: Date,
     required: true,
@@ -21,7 +21,6 @@ const UserSchema = new Schema({
   },
   InTime: {
     type: String,
-    default: "--",
     required: true,
   },
   OutTime: {
@@ -40,8 +39,4 @@ const UserSchema = new Schema({
   },
 });
 
-UserSchema.pre("save", function (next) {
-  this.password = bcrypt.hashSync(this.password, saltRounds);
-  next();
-});
-module.exports = mongoose.model("User", UserSchema);
+module.exports = mongoose.model("Attendence", AttendenceSchema);

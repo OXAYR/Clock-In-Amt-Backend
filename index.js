@@ -3,7 +3,7 @@
 const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
-// const cars = require("./routes/attendence");
+const attendence = require("./routes/attendence");
 const users = require("./routes/users");
 const bodyParser = require("body-parser");
 const mongoose = require("./config/database");
@@ -20,7 +20,7 @@ app.get("/", function (req, res) {
 
 app.use("/users", users);
 
-// app.use("/attendence", validateUser, attendence);
+app.use("/attendence", validateUser, attendence);
 app.get("/favicon.ico", function (req, res) {
   res.sendStatus(204);
 });
