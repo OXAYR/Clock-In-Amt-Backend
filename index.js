@@ -20,7 +20,7 @@ app.get("/", function (req, res) {
 
 app.use("/users", users);
 
-app.use("/attendence", validateUser, attendence);
+app.use("/attendance", validateUser, attendence);
 app.get("/favicon.ico", function (req, res) {
   res.sendStatus(204);
 });
@@ -41,12 +41,12 @@ function validateUser(req, res, next) {
   );
 }
 app.use(function (req, res, next) {
-  let err = new Error("Not Found");
+  let err = new Error("Not Found", req.body);
   err.status = 404;
   next(err);
 });
 app.use(function (err, req, res, next) {
-  console.log(err);
+  console.log("error heherh", err);
 
   if (err.status === 404) res.status(404).json({ message: "Not found" });
   else res.status(500).json({ message: "Something looks wrong :( !!!" });
