@@ -16,7 +16,8 @@ const AttendenceSchema = new Schema({
     required: true,
   },
   Status: {
-    type: Number,
+    type: String,
+    default: "A",
     required: true,
   },
   InTime: {
