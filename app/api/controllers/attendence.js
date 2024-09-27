@@ -11,12 +11,10 @@ const checkIn = async (req, res, next) => {
     Status: req.body.status,
     InTime: req.body.inTime,
   };
-  console.log("here is the attendence entity =====>", data);
 
   await attendenceModel
     .create(data)
     .then((result) => {
-      console.log("here is the data======>", data);
       res.send({ status: 200, msg: "Checked-In successfully", data: data });
     })
     .catch((err) => {
@@ -56,11 +54,28 @@ const checkOut = async (req, res, next) => {
 
 const fetchUserAttendence = async (req, res, next) => {
   try {
-    console.log("here is the request bod===>", req.body);
     const { userId } = req.body;
-    const record = await attendenceModel.find({ userId: userId });
-    console.log("hereos the record====>", record);
-    res.status(200).json({ message: "User Record Fetch successfully", record });
+    const records = await attendenceModel.find({ userId: userId });
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    let todayAttendenceId = null;
+
+    const isPresentToday = records.some((record) => {
+      const recordDate = new Date(record.Date);
+      console.log("heri s hte record===>", recordDate);
+      recordDate.setHours(0, 0, 0, 0);
+      if (recordDate.getTime() === today.getTime()) {
+        todayAttendenceId = record._id;
+        return true;
+      }
+    });
+    console.log("here s the is present", isPresentToday);
+    res.status(200).json({
+      message: "User Record Fetch successfully",
+      records,
+      isPresentToday,
+      todayAttendenceId,
+    });
   } catch (error) {
     next(error);
   }
