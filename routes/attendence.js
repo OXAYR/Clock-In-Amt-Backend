@@ -6,6 +6,6 @@ const attendenceController = require("../app/api/controllers/attendence");
 
 router.post("/checkin", attendenceController.checkIn);
 router.patch("/checkout/:attendenceId", attendenceController.checkOut);
-router.get("/records", attendenceController.fetchUserAttendence);
+router.get("", attendenceController.fetchUserAttendence);
 
 module.exports = router;

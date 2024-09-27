@@ -56,8 +56,10 @@ const checkOut = async (req, res, next) => {
 
 const fetchUserAttendence = async (req, res, next) => {
   try {
+    console.log("here is the request bod===>", req.body);
     const { userId } = req.body;
-    const record = await attendenceModel.findById(userId);
+    const record = await attendenceModel.find({ userId: userId });
+    console.log("hereos the record====>", record);
     res.status(200).json({ message: "User Record Fetch successfully", record });
   } catch (error) {
     next(error);
