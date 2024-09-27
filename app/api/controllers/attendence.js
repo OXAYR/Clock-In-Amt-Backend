@@ -3,7 +3,7 @@
 const attendenceModel = require("../models/attendence");
 const jwt = require("jsonwebtoken");
 
-const checkIn = (req, res, next) => {
+const checkIn = async (req, res, next) => {
   const data = {
     userId: req.body.userId,
     Date: req.body.date,
@@ -13,7 +13,7 @@ const checkIn = (req, res, next) => {
   };
   console.log("here is the attendence entity =====>", data);
 
-  attendenceModel
+  await attendenceModel
     .create(data)
     .then((result) => {
       console.log("here is the data======>", data);
@@ -29,7 +29,7 @@ const checkOut = async (req, res, next) => {
     const { outTime } = req.body;
 
     const attendanceRecord = await attendenceModel.findById(
-      req.params.attendeceId
+      req.params.attendenceId
     );
 
     if (!attendanceRecord) {
@@ -54,7 +54,18 @@ const checkOut = async (req, res, next) => {
   }
 };
 
+const fetchUserAttendence = async (req, res, next) => {
+  try {
+    const userId = req.body.userId;
+    const record = await attendenceModel.findById(userId);
+    res.status(200).json({ message: "User Record Fetch successfully", record });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   checkIn,
   checkOut,
+  fetchUserAttendence,
 };
