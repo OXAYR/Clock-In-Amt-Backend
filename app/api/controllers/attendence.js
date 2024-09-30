@@ -40,7 +40,8 @@ const checkOut = async (req, res, next) => {
     const outTimeDate = new Date(outTime);
     const differenceInMilliseconds = outTimeDate - inTimeDate;
     const hoursWorked = differenceInMilliseconds / (1000 * 60 * 60);
-    await attendenceModel.updateSearchIndex(req.params.attendeceId, {
+
+    await attendenceModel.updateById(req.params.attendenceId, {
       OutTime: outTime,
       Hours: hoursWorked,
     });
